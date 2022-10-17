@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'SECRET',
     );
   } catch (e) {
-    next(new AuthError('Пароль или почта некорректны'));
+    throw next(new AuthError('Авторизуйтесь'));
   }
 
   req.user = payload;

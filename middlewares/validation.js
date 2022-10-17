@@ -24,7 +24,7 @@ const validateMovie = celebrate({
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().pattern(regularLink),
-    trailer: Joi.string().required().pattern(regularLink),
+    trailerLink: Joi.string().required().pattern(regularLink),
     thumbnail: Joi.string().required().pattern(regularLink),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
@@ -34,7 +34,7 @@ const validateMovie = celebrate({
 
 const validateMovieId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex(),
+    movieId: Joi.string().required().length(24).hex(),
   }),
 });
 

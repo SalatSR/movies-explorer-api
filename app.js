@@ -2,19 +2,13 @@ const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const routes = require('./routes/index');
-// const { createUser, login } = require('./controllers/users');
-// const { validateSignUp, validateSignIn } = require('./middlewares/validation');
+const routes = require('./routes');
 const { requireLogger, errorLogger } = require('./middlewares/logger');
 const errorsCentral = require('./errors/errorsCentral');
-// const ValidationError = require('./errors/ValidationError');
-// const auth = require('./middlewares/auth');
-// const NotFoundError = require('./errors/NotFoundError');
 
 dotenv.config();
-const { PORT = 3000 } = process.env;
+const { NODE_ENV, DATABASE_URL, PORT } = process.env;
 
 /** Настроки CORS параметров (разрешены адреса и куки) */
 const allowedCors = {
@@ -30,7 +24,7 @@ const allowedCors = {
 const app = express();
 
 /** подключаемся к серверу mongo */
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useUnifiedTopology: false,
 });

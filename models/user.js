@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-// const { regularLink } = require('../middlewares/regularExp');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    default: 'Александр',
+    required: true,
     minlength: 2,
     maxlength: 30,
   },

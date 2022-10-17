@@ -8,20 +8,6 @@ const DuplicateError = require('../errors/DuplicateError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-/** Возвращает пользователя по _id */
-// const getUserById = (req, res, next) => {
-//   User.findById(req.params.id)
-//     .orFail(() => new NotFoundError('Пользователь с указанным id не существует'))
-//     .then((user) => res.send(user))
-//     .catch((e) => {
-//       if (e.name === 'CastError') {
-//         next(new ValidationError('Передан некорректный ID пользователя'));
-//       } else {
-//         next(e);
-//       }
-//     });
-// };
-
 /** Создаёт пользователя */
 const createUser = (req, res, next) => {
   const {
@@ -38,8 +24,8 @@ const createUser = (req, res, next) => {
         password: hashedPassword,
       })
         .then((user) => res.send({
-          name,
-          email,
+          name: user.name,
+          email: user.email,
         }))
         .catch((e) => {
           if (e.name === 'MongoServerError' || e.code === 11000) {
@@ -71,7 +57,9 @@ const patchUserInfo = (req, res, next) => {
     .orFail(() => new NotFoundError('Пользователь с указанным id не существует'))
     .then((data) => res.send(data))
     .catch((e) => {
-      if (e.name === 'ValidationError' || e.name === 'CastError') {
+      if (e.name === 'MongoServerError' || e.code === 11000) {
+        next(new DuplicateError('Пользователь с таким email уже существует'));
+      } else if (e.name === 'ValidationError' || e.name === 'CastError') {
         next(new ValidationError('Переданы некорректные данные при обновлении профиля'));
       } else {
         next(e);
@@ -113,7 +101,7 @@ const login = (req, res, next) => {
               httpOnly: true,
               sameSite: true,
             });
-            res.send(user.toJSON());
+            res.send(user);
           } else {
             next(new AuthError('Неправильная почта или пароль'));
           }

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const { regularLink } = require('../middlewares/regularExp');
 
 const movieSchema = new mongoose.Schema({
@@ -12,7 +11,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   duration: {
-    type: String,
+    type: Number,
     required: true,
   },
   year: {
@@ -59,7 +58,7 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
   },
   movieId: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+    type: Number,
     required: true,
   },
   nameRU: {
