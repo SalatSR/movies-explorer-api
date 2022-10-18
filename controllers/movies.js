@@ -5,38 +5,15 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 /** Возвращает все фильмы, сохранённые текущим пользователем */
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
 
 /** Создаёт фильм */
 const createMovie = (req, res, next) => {
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
   Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
+    ...req.body,
     owner: req.user._id,
   })
     .then((movie) => res.status(201).send(movie))

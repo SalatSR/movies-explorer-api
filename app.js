@@ -8,7 +8,7 @@ const { requireLogger, errorLogger } = require('./middlewares/logger');
 const errorsCentral = require('./errors/errorsCentral');
 
 dotenv.config();
-const { NODE_ENV, DATABASE_URL, PORT } = process.env;
+const { NODE_ENV, DATABASE_URL, PORT = 3000 } = process.env;
 
 /** Настроки CORS параметров (разрешены адреса и куки) */
 const allowedCors = {
