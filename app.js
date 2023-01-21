@@ -13,6 +13,8 @@ const { NODE_ENV, DATABASE_URL, PORT = 3000 } = process.env;
 /** Настроки CORS параметров (разрешены адреса и куки) */
 const allowedCors = {
   origin: [
+    'https://salatiksr.ru',
+    'http://salatiksr.ru',
     'https://salatsr-movies.nomoredomains.icu',
     'http://salatsr-movies.nomoredomains.icu',
     'http://localhost:3001',
