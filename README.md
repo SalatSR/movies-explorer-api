@@ -1,6 +1,6 @@
 # movies-explorer-api
 Backend для дипломной работы в Yandex-Practicum
-## Привенено:
+## Применено:
 Node.js, MongoDB
 ## Backend (movies-explorer-api):
 https://api.salatiksr.ru
